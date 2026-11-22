@@ -4,6 +4,8 @@
 
 **[ブラウザーで遊ぶ](https://kaxic.github.io/shiosai-sky-garden/)**
 
+[実際のプレイ映像を見る](https://kaxic.github.io/shiosai-sky-garden/media/demo.mp4)
+
 ![空庭ブロック工房のゲーム画面](Guides/Voxel.jpg)
 
 [遊び方と手動で拡張する方法](Guides/Voxel.md)
