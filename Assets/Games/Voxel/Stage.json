@@ -1,0 +1,11 @@
+{
+  "key": "Voxel",
+  "title": "空庭ブロック工房",
+  "english": "THE SKYBLOCK ATELIER",
+  "product": "Skyblock Atelier",
+  "introduction": "雲海の上に、あなたの工房を。\n浮島をめぐり、橋や塔を一段ずつ組み上げましょう。",
+  "controls": "左クリック 設置　Shift＋左 回収　中クリック 採色　R 素材を回転。\n右ドラッグまたはQ・Eで旋回、WASDで移動、ホイールで拡縮。\n\nN 次の設計部位　Space 設置　Enter 出品　G ガイド　Tab 素材　B 設計　T 渡航　F 補給・発見　H 作業手帳。Z / Y で取り消し・やり直し。F8 絵はがき、F9 アルバム。",
+  "accent": "#E8B15D",
+  "ink": "#1D3946",
+  "paper": "#FAF0CF"
+}

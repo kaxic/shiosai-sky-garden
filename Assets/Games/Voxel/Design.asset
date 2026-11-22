@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cde763a7415b356449cee39cb01180d9, type: 3}
+  m_Name: Design
+  m_EditorClassIdentifier: Assembly-CSharp::StudioSkin
+  key: Voxel
+  title: "\u7A7A\u5EAD\u30D6\u30ED\u30C3\u30AF\u5DE5\u623F"
+  english: THE SKYBLOCK ATELIER
+  product: Skyblock Atelier
+  introduction: "\u96F2\u6D77\u306E\u4E0A\u306B\u3001\u3042\u306A\u305F\u306E\u5DE5\u623F\u3092\u3002\n\u6D6E\u5CF6\u3092\u3081\u3050\u308A\u3001\u6A4B\u3084\u5854\u3092\u4E00\u6BB5\u305A\u3064\u7D44\u307F\u4E0A\u3052\u307E\u3057\u3087\u3046\u3002"
+  controls: "\u5DE6\u30AF\u30EA\u30C3\u30AF \u8A2D\u7F6E\u3000Shift\uFF0B\u5DE6 \u56DE\u53CE\u3000\u4E2D\u30AF\u30EA\u30C3\u30AF
+    \u63A1\u8272\u3000R \u7D20\u6750\u3092\u56DE\u8EE2\u3002\n\u53F3\u30C9\u30E9\u30C3\u30B0\u307E\u305F\u306FQ\u30FBE\u3067\u65CB\u56DE\u3001WASD\u3067\u79FB\u52D5\u3001\u30DB\u30A4\u30FC\u30EB\u3067\u62E1\u7E2E\u3002\n\nN
+    \u6B21\u306E\u8A2D\u8A08\u90E8\u4F4D\u3000Space \u8A2D\u7F6E\u3000Enter \u51FA\u54C1\u3000G
+    \u30AC\u30A4\u30C9\u3000Tab \u7D20\u6750\u3000B \u8A2D\u8A08\u3000T \u6E21\u822A\u3000F
+    \u88DC\u7D66\u30FB\u767A\u898B\u3000H \u4F5C\u696D\u624B\u5E33\u3002Z / Y \u3067\u53D6\u308A\u6D88\u3057\u30FB\u3084\u308A\u76F4\u3057\u3002F8
+    \u7D75\u306F\u304C\u304D\u3001F9 \u30A2\u30EB\u30D0\u30E0\u3002"
+  accent: {r: 0.9098039, g: 0.69411767, b: 0.3647059, a: 1}
+  ink: {r: 0.11372549, g: 0.22352941, b: 0.27450982, a: 1}
+  paper: {r: 0.98039216, g: 0.9411765, b: 0.8117647, a: 1}
+  cover: {fileID: 2800000, guid: b71d8671ec118704c978b72a193dd437, type: 3}
+  illustrations: {fileID: 2800000, guid: cbd407a86cf298a429218a9d4c31989c, type: 3}
+  specimenPlate: {fileID: 2800000, guid: 4180c307ae249804ca8aa8b6b4257c5b, type: 3}
+  music: {fileID: 8300000, guid: 63286a92025a24d46a240fb155b55963, type: 3}
+  activityMusic: {fileID: 8300000, guid: 94c142515dcb47e41b0e636dc117a233, type: 3}
+  effects:
+  - {fileID: 8300000, guid: 1411f2c1c7796fb4e89a3072685484bd, type: 3}
+  - {fileID: 8300000, guid: d5ae7e945ba927f44b4d15da2db0ed39, type: 3}
+  - {fileID: 8300000, guid: 46a5a615019792248bccd71ebe4bca91, type: 3}
+  - {fileID: 8300000, guid: f90d7776ca5b17c479671b35e05df400, type: 3}
+  - {fileID: 8300000, guid: 39c35b9fa08ddc64092953237586fc79, type: 3}
