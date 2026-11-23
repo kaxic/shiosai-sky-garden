@@ -9,7 +9,7 @@ public sealed class VoxelBlueprintWindow : EditorWindow
 {
     const string CatalogPath = "Assets/Games/Voxel/Resources/Voxel/Workshop.json";
     const int Side = 7;
-    static readonly string[] Islands = { "芽吹きの庭島", "琥珀の風車島", "群青の星晶島" };
+    static readonly string[] Islands = VoxelGame.IslandNames;
     static readonly string[] Directions = { "北 ↑", "東 →", "南 ↓", "西 ←" };
     readonly Stack<VoxelPart[]> undo = new Stack<VoxelPart[]>();
     VoxelCatalog catalog;

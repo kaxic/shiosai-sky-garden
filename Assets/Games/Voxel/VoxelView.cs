@@ -48,6 +48,7 @@ public sealed class VoxelView : MonoBehaviour
         stage=new GameObject("Sky garden atelier").transform;stage.SetParent(transform,false);
         Material Mat(string id)=>new Material(Resources.Load<Shader>("Voxel/Art/"+id)){name=id};
         blocks=Mat("BlockPrint");blocks.SetTexture("_Atlas",Resources.Load<Texture2D>("Voxel/Art/BlockFaces"));
+        blocks.SetTexture("_EastAtlas",Resources.Load<Texture2D>("Voxel/Art/EastFaces"));
         preview=Mat("BuildOverlay");faceInk=Mat("BuildOverlay");guideInk=Mat("BuildOverlay");
         faceInk.SetColor("_Ink",ColorOf("FFF1A6"));faceInk.SetFloat("_Fill",.12f);faceInk.SetFloat("_Edge",.98f);
         guideInk.SetColor("_Ink",ColorOf("B6ECF3"));guideInk.SetFloat("_Fill",.038f);guideInk.SetFloat("_Edge",.27f);
@@ -75,7 +76,7 @@ public sealed class VoxelView : MonoBehaviour
     }
     void ColorOfBiome()
     {
-        string[] high={"5DABC9","7D98B9","8297C7"},horizon={"F4E5C6","F8D4AE","DFE0EF"},deep={"98C6CB","D5B6A0","9DBBD8"};
+        string[] high={"5DABC9","7D98B9","8297C7","A8AFD9","67AEBB","575780"},horizon={"F4E5C6","F8D4AE","DFE0EF","FBE1D8","CDEBDC","E7B99D"},deep={"98C6CB","D5B6A0","9DBBD8","C8ADBC","89B9C4","988DA8"};
         sky.SetColor("_High",ColorOf(high[island]));sky.SetColor("_Horizon",ColorOf(horizon[island]));sky.SetColor("_Deep",ColorOf(deep[island]));
         blocks.SetColor("_Air",ColorOf(horizon[island]));water.SetColor("_Ink",ColorOf(island==1?"A8C7BC":island==2?"9BBBDC":"6DBBC6"));
         cloudInk.SetColor("_Crown",ColorOf(island==2?"F1F0FA":"F8F1DA"));cloudInk.SetColor("_ShadowCloud",ColorOf(island==1?"D7BEAF":island==2?"B6C9DE":"AFCDD0"));

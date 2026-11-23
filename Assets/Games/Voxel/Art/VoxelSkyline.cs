@@ -11,6 +11,23 @@ internal sealed class VoxelSkyline
     {m.Ink(tile,ink,glow);m.Box(o+V(x,y,z),V(w,h,d),Quaternion.identity);}
     void Beam(Vector3 a,Vector3 b,float w,float d,int tile,string tint="FFFFFF"){
         m.Ink(tile,tint);m.Beam(o+a,o+b,w,d);}
+    void EasternMonument()
+    {
+        if(biome==3){
+            foreach(float x in new[]{-1.34f,1.34f}){B(x,1.62f,0,.31f,3.24f,.32f,24);B(x,.15f,0,.55f,.30f,.55f,Ashlar);}
+            B(0,2.65f,0,3.37f,.20f,.22f,24);B(0,3.29f,0,3.86f,.29f,.42f,24);
+            B(0,3.48f,0,4.26f,.16f,.54f,30);B(0,2.98f,0,.51f,.46f,.25f,Brass);
+            for(int s=-1;s<=1;s+=2){B(s*1.92f,1.04f,-1,.23f,2.08f,.24f,20);for(int j=0;j<3;j++)B(s*(1.75f+j*.20f),2.01f+j*.17f,-1.1f+j*.29f,1.0f,.43f,1.03f,23);}
+        }else if(biome==4){
+            for(int j=-2;j<=2;j++){B(j*.66f,1.36f,.23f,.33f,2.72f,.54f,10);B(j*.66f,2.74f,.23f,.68f,.31f,.93f,26);}
+            for(int j=0;j<12;j++){float a=j*Mathf.PI/6;var r=V(Mathf.Sin(a)*1.16f,1.39f+Mathf.Cos(a)*1.16f,-.49f);
+                Beam(V(0,1.39f,-.49f),r,.104f,.16f,28);var e=V(Mathf.Sin(a+Mathf.PI/6)*1.16f,1.39f+Mathf.Cos(a+Mathf.PI/6)*1.16f,-.49f);Beam(r,e,.15f,.48f,28);}
+        }else{
+            for(int j=0;j<5;j++)B(0,j*.47f+.235f,0,2.76f-j*.33f,.47f,2.43f-j*.24f,30);
+            for(int j=0;j<3;j++){B(0,2.47f+j*.22f,0,1.03f-j*.14f,.22f,.92f-j*.11f,Brass);B(0,.74f+j*.51f,-1.06f+j*.12f,.20f,.27f,.11f,31,"FFFFFF",.76f);}
+            Beam(V(0,2.70f,.3f),V(.1f,3.13f,-.81f),.42f,.42f,33);
+        }
+    }
     public static Vector3 MillAt=>V(-11.9f,-.3f,8.7f);
     public void Make(VoxelGame g)
     {
@@ -18,6 +35,7 @@ internal sealed class VoxelSkyline
             var key=g.Landmark(i);o=(Vector3)key+V(.5f,0,.5f);
             B(0,.048f,0,.99f,.094f,.99f,Enamel);B(0,.22f,0,.58f,.29f,.58f,biome==0?Boards:biome==1?Sandstone:Ashlar);
             if(i==0){
+                if(biome>=3){B(0,.61f,0,.38f,.53f,.38f,biome==3?20:biome==4?27:30);B(0,1.01f,0,.62f,.24f,.60f,biome==3?23:biome==4?25:31);}
                 if(biome==0){B(0,.69f,0,.14f,.81f,.14f,Brass);m.Ink(Enamel);m.Box(o+V(0,1.14f,0),V(.58f,.16f,.28f),Quaternion.Euler(0,33,0));}
                 if(biome==1){B(0,.57f,0,.46f,.48f,.47f,Sandstone);B(0,.88f,0,.30f,.19f,.30f,Enamel);B(0,1.06f,0,.13f,.20f,.13f,Brass);}
                 if(biome==2){Crystal(V(0,.37f,0),.23f,1.15f,28,"80C5DC");Crystal(V(.23f,.35f,.12f),.14f,.61f,-12,"AD96D3");}
@@ -33,7 +51,7 @@ internal sealed class VoxelSkyline
         B(-.35f,.65f,-.34f,.33f,.05f,.27f,Plain,"CD9A6D");B(-.35f,.70f,-.34f,.12f,.08f,.14f,Brass);
         Artisan(V(.20f,.085f,.08f));
         o=MillAt;Islet(5.4f,4.0f,2.5f,11);
-        if(biome==0)Mill();else if(biome==1)Observatory();else Pavilion();
+        if(biome==0)Mill();else if(biome==1)Observatory();else if(biome==2)Pavilion();else EasternMonument();
         o=V(12.8f,-1.3f,8.9f);Islet(4.7f,4.5f,2.8f,9);
         if(biome==2){Crystal(V(-.61f,0,0),.47f,3.22f,-9,"95C2E1");Crystal(V(.35f,0,.23f),.40f,2.12f,18,"AD94CD");}
         else {Tree(-.72f,0,.30f,1.25f,9);Tree(.73f,0,-.39f,.87f,21);}

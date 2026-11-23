@@ -142,10 +142,11 @@ public sealed partial class VoxelHud
     {
         Rect p=Book(914,434,"ISLAND SURVEY","浮島航路図");
         int count=VoxelGame.IslandNames.Length;
-        float x=p.x+20,y=p.y+89,cw=(p.width-40-8*(count-1))/count;
-        for(int i=0;i<count;i++)
+        float x=p.x+20,y=p.y+89,cw=(p.width-56)/3;
+        int first=game.Selection/3*3;
+        for(int i=first;i<Mathf.Min(count,first+3);i++)
         {
-            Rect r=new Rect(x+i*(cw+8),y,cw,244);
+            Rect r=new Rect(x+(i-first)*(cw+8),y,cw,244);
             Row(r,game.Selection==i);
             Drawing(new Rect(r.x+5,r.y+5,r.width-10,122),i,true);
             Text(VoxelGame.IslandNames[i],r.x+9,r.y+131,r.width-18,33,20,Paper,true);
@@ -154,6 +155,7 @@ public sealed partial class VoxelHud
             if(Hit(r))game.Highlight(i);
         }
         int selected=Mathf.Clamp(game.Selection,0,count-1);
+        if(Button(new Rect(x+334,p.yMax-57,164,38),first==0?"東方の航路　›":"‹　西方の航路",true))game.Highlight(first==0?3:0);
         Text($"完工印　{game.Stamps}　／　発見した名所　{game.Discoveries} / {count*2}",x,p.yMax-58,p.width-290,36,15,Pale);
         if(Button(new Rect(p.xMax-221,p.yMax-57,201,38),selected==game.Island?"この島へ戻る":game.CanTravel(selected)?"この島へ渡る":"未開放",game.CanTravel(selected)))game.Travel(selected);
     }
@@ -161,6 +163,7 @@ public sealed partial class VoxelHud
     void Drawing(Rect frame,int index,bool region)
     {
         Fill(frame,Dark);
+        if(region && index>=3){var land=Resources.Load<Texture2D>("Voxel/Regions/Port"+index);if(land)GUI.DrawTexture(frame,land,ScaleMode.ScaleAndCrop);return;}
         if(!region)
         {
             if(index<0 || index>=game.Plans.Length)return;

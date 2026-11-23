@@ -38,7 +38,7 @@ public sealed class VoxelWorkshop
     public readonly VoxelRecord State;
     public int Version {get;private set;}
     public readonly List<VoxelGuideCell> GuideCells=new List<VoxelGuideCell>();
-    readonly Dictionary<Vector3Int,VoxelBlock>[] islands={new Dictionary<Vector3Int,VoxelBlock>(),new Dictionary<Vector3Int,VoxelBlock>(),new Dictionary<Vector3Int,VoxelBlock>()};
+    readonly Dictionary<Vector3Int,VoxelBlock>[] islands=new Dictionary<Vector3Int,VoxelBlock>[VoxelGame.IslandNames.Length];
     readonly Dictionary<string,VoxelStock> stocks=new Dictionary<string,VoxelStock>(StringComparer.Ordinal);
     static readonly Vector3Int[] neighbors={Vector3Int.down,Vector3Int.up,Vector3Int.left,Vector3Int.right,Vector3Int.forward,Vector3Int.back};
     public int Island=>State.island;
@@ -59,9 +59,10 @@ public sealed class VoxelWorkshop
     public bool CreativeAvailable=>State.freeEarned;
     public VoxelWorkshop(VoxelCatalog catalog,VoxelRecord record=null)
     {
+        for(int i=0;i<islands.Length;i++)islands[i]=new Dictionary<Vector3Int,VoxelBlock>();
         Catalog=catalog;State=record??new VoxelRecord();
         bool fresh=State.version==0;
-        State.version=1;State.island=Mathf.Clamp(State.island,0,2);
+        State.version=1;State.island=Mathf.Clamp(State.island,0,islands.Length-1);
         State.visited|=1|(1<<Island);
         State.repeats=Mathf.Max(0,State.repeats);
         State.stocks??=new List<VoxelStock>(); State.stamps??=new List<string>();
@@ -103,7 +104,7 @@ public sealed class VoxelWorkshop
         State.zoom=Mathf.Clamp(State.zoom,7,32);State.pitch=Mathf.Clamp(State.pitch,22,76);
         Changed();
     }
-    static bool ValidBlock(VoxelBlock b)=>b!=null && b.island>=0 && b.island<3 && !string.IsNullOrEmpty(b.materialId) && InBounds(b.island,b.Cell);
+    static bool ValidBlock(VoxelBlock b)=>b!=null && b.island>=0 && b.island<VoxelGame.IslandNames.Length && !string.IsNullOrEmpty(b.materialId) && InBounds(b.island,b.Cell);
     public static int Turn(int n)=>((n%4)+4)%4;
     public static Vector3 Center(Vector3Int v)=>(Vector3)v+Vector3.one*.5f;
     public static int GroundTop(int island,int x,int z)
@@ -113,6 +114,9 @@ public sealed class VoxelWorkshop
         float rim=x*x/115f+z*z/76f;
         float edge=.97f+.07f*Mathf.Sin(x*1.2f+z*.59f+island*2.1f);
         if(rim>edge)return -999;
+        if(island==3 && z>4 && rim>.65f)return 1;
+        if(island==4 && x>5 && z>1 && rim>.71f)return -2;
+        if(island==5 && rim>.76f && z>0)return 1+(x%2==0?1:0);
         return rim>.76f?(island==2 && z>2?1:-1):0;
     }
     public static int GroundBottom(int island,int x,int z)
@@ -142,8 +146,10 @@ public sealed class VoxelWorkshop
         return false;
     }
     public bool HasStamp(int i)=>i>=0&&i<Catalog.plans.Length&&State.stamps.Contains(Catalog.plans[i].id);
-    public bool CanTravel(int i)=>i>=0&&i<3&&((State.visited&(1<<i))!=0||Stamps>=(i==1?1:3));
-    public bool Found(int island,int site)=>island>=0&&island<3&&site>=0&&site<2&&(State.discoveries&(1<<(island*2+site)))!=0;
+    static readonly int[] PortStamps={0,1,3,6,8,10};
+    public static int Gate(int island)=>PortStamps[island];
+    public bool CanTravel(int i)=>i>=0&&i<islands.Length&&((State.visited&(1<<i))!=0||Stamps>=Gate(i));
+    public bool Found(int island,int site)=>island>=0&&island<islands.Length&&site>=0&&site<2&&(State.discoveries&(1<<(island*2+site)))!=0;
     public bool Unlocked(int i)
     {
         if(i<0||i>=Catalog.materials.Length)return false;

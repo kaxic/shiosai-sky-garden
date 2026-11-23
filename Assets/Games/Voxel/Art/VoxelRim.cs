@@ -44,6 +44,11 @@ internal static class VoxelRim
                         box(V(.044f,.063f,.01f),V(.30f,.13f,.21f),"DAAC8F",Quaternion.Euler(0,hash%110,0),Sandstone);
                         box(V(-.10f,.036f,.121f),V(.13f,.07f,.09f),"BD987D",Quaternion.identity,Rock);
                     }
+                }else if(island>=3){
+                    float h=.22f+(hash%12)*.024f;
+                    if(island==3){grass(h,14,"809871");box(V(.02f,h,.01f),V(.245f,.093f,.20f),"F2B6C0",Quaternion.identity,23);}
+                    else if(island==4){grass(h,8,"6E9F87");box(V(.08f,.065f,.05f),V(.28f,.125f,.20f),"CBD3B3",Quaternion.Euler(0,hash%91,0),29);}
+                    else{box(V(0,h/2,0),V(.15f,h,.16f),"9A839C",Quaternion.Euler(6,hash%49,7),30);box(V(.035f,h,.018f),V(.090f,.07f,.095f),"F4AB69",Quaternion.identity,31,.48f);}
                 }else{
                     float h=.17f+hash%16*.016f;var q=Quaternion.Euler(0,hash%160,j%2==0?14:-12);
                     string ice=j%3==0?"AD9FCB":"85BBCF";

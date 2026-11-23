@@ -104,7 +104,7 @@ public static class VoxelVerification
     public static VoxelWorkshop Run(VoxelCatalog c)
     {
         GridAndHistory(c);FacingAndCatalog(c);
-        var w=Populated(c);Check(w.Stamps==c.plans.Length&&w.CreativeAvailable&&w.State.discoveries==63,"三島・全名所・全依頼");
+        var w=Populated(c);Check(w.Stamps==c.plans.Length&&w.CreativeAvailable&&w.State.discoveries==(1<<(VoxelGame.IslandNames.Length*2))-1,"三島・全名所・全依頼");
         for(int turns=1;turns<4;turns++)Check(Populated(c,turns).CreativeAvailable,"90度ずつ回した六つの設計");
         w=Resume(c,w);
         Check(w.CreativeAvailable&&w.CanSelect(c.plans.Length)&&w.Select(c.plans.Length)&&w.State.planTurn==1,"巡回設計の別地点・別方角");
@@ -127,7 +127,7 @@ public static class VoxelVerification
         Check(w.Place(free,"wood",0)&&w.Stock(i)==before,"自由建築の在庫");
         w.State.creative=false;Check(w.Remove(free)&&w.Stock(i)==before&&w.History(false)&&w.Stock(i)==before,"通常へ戻った際に無料の部材を重複返却しない");
         var completed=Resume(c,w);Check(completed.State.repeats==2&&completed.At(free)!=null&&completed.BestEdits(0)==ideal,"巡回・最短手数・自由建築を保存");
-        Debug.Log("VOXEL_RULES_OK 6 plans x 4 bearings, 3 islands, 6 discoveries, 2 deliveries, stock, undo, catalog migrations, ray faces");
+        Debug.Log("VOXEL_RULES_OK 12 plans x 4 bearings, 6 islands, 12 discoveries, 2 deliveries, stock, undo, catalog migrations, ray faces");
         return completed;
     }
 }

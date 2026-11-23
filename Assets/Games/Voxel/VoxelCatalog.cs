@@ -34,7 +34,7 @@ using UnityEngine;
         for(int i=0;i<materials.Length;i++)
         {
             var m=materials[i];
-            if(m==null||string.IsNullOrWhiteSpace(m.id)||string.IsNullOrWhiteSpace(m.name)||m.island<0||m.island>2||m.site< -1||m.site>1||
+            if(m==null||string.IsNullOrWhiteSpace(m.id)||string.IsNullOrWhiteSpace(m.name)||m.island<0||m.island>=VoxelGame.IslandNames.Length||m.site< -1||m.site>1||
                 m.initial<0||m.supply<1||!ColorUtility.TryParseHtmlString(m.color,out _))
                 throw new InvalidOperationException($"素材 {i+1} のID、色、採取場所、数量を確認してください。");
             if(materialIds.ContainsKey(m.id))throw new InvalidOperationException("素材ID重複: "+m.id);materialIds.Add(m.id,i);
@@ -42,7 +42,7 @@ using UnityEngine;
         for(int i=0;i<plans.Length;i++)
         {
             var p=plans[i];
-            if(p==null||string.IsNullOrWhiteSpace(p.id)||string.IsNullOrWhiteSpace(p.name)||p.island<0||p.island>2||p.parts==null||p.parts.Length==0)
+            if(p==null||string.IsNullOrWhiteSpace(p.id)||string.IsNullOrWhiteSpace(p.name)||p.island<0||p.island>=VoxelGame.IslandNames.Length||p.parts==null||p.parts.Length==0)
                 throw new InvalidOperationException($"設計 {i+1} のID・島・部位を確認してください。");
             if(planIds.ContainsKey(p.id))throw new InvalidOperationException("設計ID重複: "+p.id);planIds.Add(p.id,i);
             var cells=new HashSet<Vector3Int>();

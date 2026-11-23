@@ -4,9 +4,9 @@ using UnityEngine;
 [RequireComponent(typeof(VoxelPostcard))]
 public sealed class VoxelGame : StudioGame
 {
-    public static readonly string[] IslandNames={"芽吹きの庭島","琥珀の風車島","群青の星晶島"};
-    public static readonly string[] IslandNotes={"花の種と木漏れ日を運ぶ、庭師たちの浮島。","砂岩の段丘と渡り風が育てたガラス職人の島。","群青の岩盤に星を映す結晶の島。"};
-    static readonly string[,] landmarks={{"木漏れ日の灯標","花染めの苗床"},{"銅の風読み台","渡り風の羽根塚"},{"星晶の露頭","星冠の祭壇"}};
+    public static readonly string[] IslandNames={"芽吹きの庭島","琥珀の風車島","群青の星晶島","桜霞の社島","水車の雲滝島","宵炉の黒曜島"};
+    public static readonly string[] IslandNotes={"花の種と木漏れ日を運ぶ、庭師たちの浮島。","砂岩の段丘と渡り風が育てたガラス職人の島。","群青の岩盤に星を映す結晶の島。","桜の花と朱塗りの社が雲に浮かぶ。","段丘を走る水路と職人の水車。","星を測る鍛冶師の黒い火山島。"};
+    static readonly string[,] landmarks={{"木漏れ日の灯標","花染めの苗床"},{"銅の風読み台","渡り風の羽根塚"},{"星晶の露頭","星冠の祭壇"},{"組子の社","桜の苗床"},{"青銅の水門","雲滝の水車"},{"火花の鋳型","火口観測台"}};
     static readonly string[] directions={"北","東","南","西"};
     VoxelWorkshop work;
     VoxelCatalog catalog;
@@ -33,7 +33,7 @@ public sealed class VoxelGame : StudioGame
     public int TourEdits=>S.tourEdits;
     public int TourBuilt=>work.TourBuilt;
     public int BestEdits(int planIndex)=>work.BestEdits(planIndex);
-    public int Discoveries {get {int count=0;for(int i=0;i<6;i++)if((S.discoveries&(1<<i))!=0)count++;return count;}}
+    public int Discoveries {get {int count=0;for(int i=0;i<IslandNames.Length*2;i++)if((S.discoveries&(1<<i))!=0)count++;return count;}}
     public bool Creative=>S.creative;
     public bool CreativeAvailable=>work.CreativeAvailable;
     public string LastLog=>S.log;
@@ -70,7 +70,7 @@ public sealed class VoxelGame : StudioGame
     public bool HasStamp(int i)=>work.HasStamp(i);
     public bool CanSelectPlan(int i)=>work.CanSelect(i);
     public int PlanIsland(int i)=>work.PlanIsland(i);
-    public string TravelRule(int i)=>i<=0?"いつでも渡航できます":$"完工印 {(i==1?1:3)} 個で渡航";
+    public string TravelRule(int i)=>i<=0?"いつでも渡航できます":$"完工印 {VoxelWorkshop.Gate(i)} 個で渡航";
     public string GateText(int material)
     {
         if(material<0||material>=Materials.Length)return "";
@@ -107,7 +107,7 @@ public sealed class VoxelGame : StudioGame
         view=gameObject.AddComponent<VoxelView>();hud=new VoxelHud();oldMouse=Input.mousePosition;
         KeyboardTarget();view.Render(this);
     }
-    protected override void LateGame(){if(work!=null){SetIntenseMusic(Island==2);view.Render(this);}}
+    protected override void LateGame(){if(work!=null){SetIntenseMusic(Island==2 || Island==5);view.Render(this);}}
     protected override void SaveCheckpoint(){if(work!=null)Save(S);}
     protected override bool HandleEscape(){if(Mode==VoxelMode.Build)return false;Back();return true;}
     void Say(string text,int sound=-1){S.log=text;Notice(text);if(sound>=0)Tone(sound);}
@@ -117,7 +117,7 @@ public sealed class VoxelGame : StudioGame
     }
     public void Back(){Mode=VoxelMode.Build;oldMouse=Input.mousePosition;}
     public void Highlight(int i){Selection=Mathf.Clamp(i,0,MenuCount()-1);}
-    int MenuCount()=>Mode==VoxelMode.Palette?Materials.Length:Mode==VoxelMode.Plans?Plans.Length+1:Mode==VoxelMode.Travel?3:5;
+    int MenuCount()=>Mode==VoxelMode.Palette?Materials.Length:Mode==VoxelMode.Plans?Plans.Length+1:Mode==VoxelMode.Travel?IslandNames.Length:5;
     public void PickMaterial(int i)
     {
         if(!Unlocked(i)){Say(GateText(i));return;}S.selectedId=Materials[i].id;Back();SaveCheckpoint();

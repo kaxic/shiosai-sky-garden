@@ -33,6 +33,9 @@ internal static class VoxelBlocksArt
                         if(f==0&&surface)m.Ink(18);
                         else if(y>=top-2)m.Ink(Sandstone,"E4A878");
                         else m.Ink(h%12==0?Brick:Rock,y%3==0?"C5917F":"E7AD89");
+                    }else if(g.Island>=3){
+                        int tile=g.Island==3?(surface?0:23):g.Island==4?(surface?29:10):(surface?30:31);
+                        m.Ink(tile,g.Island==3&&surface?"CDD7B3":"FFFFFF");
                     }else{
                         if(f==0&&surface)m.Ink(19);
                         else if(surface)m.Ink(Marble,"C7E7F1");
@@ -44,12 +47,13 @@ internal static class VoxelBlocksArt
         }
     }
     public static bool IsPanel(string id)=>id=="glass"||id=="frost";
-    public static bool IsFull(string id)=>id!="steps"&&id!="vane"&&id!="lantern"&&id!="bloom"&&!IsPanel(id)&&id!="crystal"&&id!="star";
+    public static bool IsFull(string id)=>!VoxelEastBlocks.OpenShape(id)&&id!="steps"&&id!="vane"&&id!="lantern"&&id!="bloom"&&!IsPanel(id)&&id!="crystal"&&id!="star";
     public static void Build(VoxelFabric m,Vector3Int cell,string id,int turns,IDictionary<Vector3Int,string> occupied,string tint)
     {
         Vector3 p=(Vector3)cell+Vector3.one*.5f;Quaternion q=Quaternion.Euler(0,turns*90,0);
         void block(float x,float y,float z,float w,float h,float d,int tile,string color="FFFFFF",float glow=0)
         {m.Ink(tile,color,glow);m.Box(p+q*V(x,y,z),V(w,h,d),q);}
+        if(VoxelEastBlocks.Build(m,cell,id,turns,occupied)) return;
         bool has(Vector3Int at,string material)=>occupied!=null&&occupied.TryGetValue(at,out var existing)&&existing==material;
         // A run of steps on parallel planks atop log feet joins into garden seating.
         // Individual cells still belong to their corresponding editable materials.

@@ -1,5 +1,5 @@
 Shader "Voxel/Block print" {
- Properties{_Atlas("Hand-painted 4 by 4 block atlas",2D)="white"{} _Air("Horizon",Color)=(.70,.84,.86,1)}
+ Properties{_Atlas("Hand-painted 4 by 4 block atlas",2D)="white"{} _EastAtlas("Eastern artisans",2D)="white"{} _Air("Horizon",Color)=(.70,.84,.86,1)}
  SubShader { Tags {"RenderType"="Opaque"}
  Pass { Tags {"LightMode"="ForwardBase"}
  CGPROGRAM
@@ -9,7 +9,7 @@ Shader "Voxel/Block print" {
  #pragma multi_compile_fwdbase
  #include "UnityCG.cginc"
  #include "AutoLight.cginc"
- sampler2D _Atlas;half4 _Air;float4 _Atlas_TexelSize;
+ sampler2D _Atlas,_EastAtlas;half4 _Air;float4 _Atlas_TexelSize;
  struct app{float4 vertex:POSITION;float3 normal:NORMAL;float4 uv:TEXCOORD0;half4 color:COLOR;};
  struct ps{float4 pos:SV_POSITION;float4 uv:TEXCOORD0;half3 n:TEXCOORD1;float dist:TEXCOORD2;half4 color:COLOR;SHADOW_COORDS(3) float3 world:TEXCOORD4;};
  ps vert(app v){ps o;o.pos=UnityObjectToClipPos(v.vertex);o.n=UnityObjectToWorldNormal(v.normal);o.uv=v.uv;o.color=v.color;o.world=mul(unity_ObjectToWorld,v.vertex).xyz;o.dist=distance(o.world,_WorldSpaceCameraPos);TRANSFER_SHADOW(o);return o;}
@@ -23,7 +23,11 @@ Shader "Voxel/Block print" {
  half4 frag(ps i):SV_Target{
   float2 uv=i.uv.xy;float tile=floor(i.uv.z+.5);
   half3 art=1;
-  if(tile>18.5){art=lerp(half3(.78,.88,.91),page(15,frac(i.world.xz*.24))*half3(.84,1.03,1.12),.31);}
+  if(tile>=20){float id=tile-20;float2 off=float2(fmod(id,4),3-floor(id/4));art=tex2D(_EastAtlas,off*.25+lerp(.003,.247,saturate(uv))).rgb;
+#ifndef UNITY_COLORSPACE_GAMMA
+ art=LinearToGammaSpace(art);
+#endif
+ } else if(tile>18.5){art=lerp(half3(.78,.88,.91),page(15,frac(i.world.xz*.24))*half3(.84,1.03,1.12),.31);}
   else if(tile>17.5){art=lerp(half3(.84,.64,.41),page(3,frac(i.world.xz*.32)),.36);}
   else if(tile>16.5){art=lerp(half3(.53,.69,.40),page(0,frac(i.world.xz*.355)) *half3(.96,1.03,.85),.37);}
   else if(tile>15.5){

@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#15272a"><title>空庭ブロック工房 | 潮彩作品集</title>
-  <link rel="icon" href="icon.png"><link rel="stylesheet" href="player.css">
+  <link rel="icon" href="icon.png"><link rel="stylesheet" href="player.css"><link rel="stylesheet" href="touch.css"><script defer src="touch.js"></script>
 </head>
 <body>
 <header><span class="imprint">潮彩作品集</span><a href="https://github.com/kaxic/shiosai-sky-garden">GitHub ↗</a></header>
 <main>
   <section id="stage" aria-label="ゲーム画面">
-    <canvas id="game" width="1280" height="720" tabindex="0" aria-label="空庭ブロック工房のゲーム画面"></canvas>
+    <canvas id="game" data-game="Voxel" width="1280" height="720" tabindex="0" aria-label="空庭ブロック工房のゲーム画面"></canvas>
     <div id="cover">
       <div class="titleblock"><p class="genre">ブロック建築</p><h1>空庭ブロック工房</h1><p class="intro">雲海の上に、あなたの工房を。
 浮島をめぐり、橋や塔を一段ずつ組み上げましょう。</p>
@@ -36,7 +36,7 @@ const meter=document.getElementById('meter');
 let instance=null;
 const build='Build/';
 const config={
-  dataUrl:build+'Browser.data.unityweb',frameworkUrl:build+'Browser.framework.js.unityweb',codeUrl:build+'Browser.wasm.unityweb',
+  dataUrl:build+'42557ea3d5856f74a9832c4134b718c7.data.unityweb',frameworkUrl:build+'7c79eaa40e1717d5fdf44440ec033d97.framework.js.unityweb',codeUrl:build+'16358f6a077a3a2b963b831a7c24f024.wasm.unityweb',
   streamingAssetsUrl:'StreamingAssets',companyName:'Shiosai Works',productName:'Skyblock Atelier',productVersion:'1.0',
   devicePixelRatio:Math.min(1.5,window.devicePixelRatio||1),
   showBanner:function(message,type){ if(type==='error'){statusLine.textContent='読み込みに失敗しました。ページを再読み込みしてください。';console.error(message);} }
@@ -44,7 +44,7 @@ const config={
 async function startGame(){
   launchButton.disabled=true; statusLine.textContent='ゲームを読み込んでいます…';meter.hidden=false;
   try{
-    if(typeof createUnityInstance!=='function')await new Promise((resolve,reject)=>{const s=document.createElement('script'); s.src=build+'Browser.loader.js';s.onload=resolve;s.onerror=reject;document.head.appendChild(s);});
+    if(typeof createUnityInstance!=='function')await new Promise((resolve,reject)=>{const s=document.createElement('script'); s.src=build+'98ac7c1424a2e334d46a1e4e73e4c53d.loader.js';s.onload=resolve;s.onerror=reject;document.head.appendChild(s);});
     instance=await createUnityInstance(canvas,config,value=>{meter.value=value;statusLine.textContent='読み込み中　'+Math.round(100*value)+'%';});
     cover.hidden=true;canvas.focus();document.body.classList.add('playing');
   }catch(e){statusLine.textContent='ゲームを開始できませんでした。WebGL 2に対応したブラウザーで再試行してください。';meter.hidden=true;launchButton.disabled=false;console.error(e);}
