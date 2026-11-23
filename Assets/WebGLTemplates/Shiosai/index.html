@@ -2,23 +2,32 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#15272a"><title>E 浮島のブロック建築 | 潮彩作品集</title>
+  <meta name="theme-color" content="#15272a"><meta name="description" content="丸太や板を一つずつ組んで、空に浮かぶ島にベンチや橋、水車を建てます。見本を回して構造を確かめ、部材の位置や向きを合わせる立体の建築ゲームです。">
+  <title>Eブロック建築ゲーム | 潮彩ゲーム棚</title>
   <link rel="icon" href="icon.png"><link rel="stylesheet" href="player.css"><link rel="stylesheet" href="touch.css"><script defer src="touch.js"></script>
 </head>
 <body>
 <header><a class="imprint" id="library-home" href="https://kaxic.github.io/shiosai-game-library/#E"><span aria-hidden="true">← </span>ゲーム一覧</a><span id="home-status" role="status"></span><a href="https://github.com/kaxic/shiosai-sky-garden">GitHub ↗</a></header>
 <main>
   <section id="stage" aria-label="ゲーム画面">
-    <canvas id="game" data-game="Voxel" width="1280" height="720" tabindex="0" aria-label="E 浮島のブロック建築のゲーム画面"></canvas>
+    <canvas id="game" data-game="Voxel" width="1280" height="720" tabindex="0" aria-label="Eブロック建築ゲームのゲーム画面"></canvas>
     <div id="cover">
-      <div class="titleblock"><p class="genre">空庭ブロック工房</p><h1>E 浮島のブロック建築</h1><p class="intro">雲海の上に、あなたの工房を。
-浮島をめぐり、橋や塔を一段ずつ組み上げましょう。</p>
-        <button id="launch">ゲームを開始 <span aria-hidden="true">›</span></button>
+      <div class="titleblock"><p class="genre">空庭ブロック工房</p><h1>Eブロック建築ゲーム</h1><p class="intro">丸太や板を一つずつ組んで、空に浮かぶ島にベンチや橋、水車を建てます。見本を回して構造を確かめ、部材の位置や向きを合わせる立体の建築ゲームです。</p>
+        <div class="cover-actions"><button id="launch">ゲームを開始 <span aria-hidden="true">›</span></button>
+          <a href="#how-to-play">遊び方を読む <span aria-hidden="true">↓</span></a></div>
         <div id="status" role="status" aria-live="polite"></div><progress id="meter" max="1" value="0" hidden></progress>
       </div>
     </div>
   </section>
-  <div class="bar"><span class="wordmark">E 浮島のブロック建築</span><div class="buttons"><button id="help">操作方法</button><button id="full">全画面</button><a id="demo" href="media/demo.mp4" hidden>プレイ映像 ▷</a></div></div>
+  <div class="bar"><span class="wordmark">Eブロック建築ゲーム</span><div class="buttons"><button id="help">操作方法</button><button id="full">全画面</button><a id="demo" href="media/demo.mp4" hidden>プレイ映像 ▷</a></div></div>
+  <section class="play-guide" id="how-to-play" aria-labelledby="guide-title" tabindex="-1">
+    <h2 id="guide-title">このゲームの遊び方</h2>
+    <div class="guide-columns">
+      <section><h3>最初にすること</h3><p>設計帳で「風待ちのベンチ」を選びましょう。「次の部位」で丸太の脚を呼び出して設置。ガイドに沿って梁を渡し、北向きの座面を並べたら、完成したベンチを出品します。</p></section>
+      <section><h3>遊びの流れ</h3><p>島の桟橋や名所で材料を補給し、設計図の形に合わせて積み上げます。視点を回せば裏側や高さも確認できます。一度置いた部材は取り消せるので、向きのある板や段もじっくり合わせられます。</p></section>
+      <section><h3>目指すもの</h3><p>最初のベンチを出品すると2番目の島へ渡れます。設計を仕上げていくと、全6島で32種類の素材が使えます。12件の設計を仕上げると、材料の残りを気にせず自由に建築できます。巡回依頼では設計ごとの最少手数も記録されます。</p></section>
+    </div>
+  </section>
   <dialog id="guide"><div class="dialogtop"><h2>操作方法</h2><button class="close">閉じる</button></div><p>キーボードとマウスで遊べます。進行はこのブラウザーに保存されます。</p><div id="controls">左クリック 設置　Shift＋左 回収　中クリック 採色　R 素材を回転。
 右ドラッグまたはQ・Eで旋回、WASDで移動、ホイールで拡縮。
 
