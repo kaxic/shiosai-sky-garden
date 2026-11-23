@@ -2,23 +2,23 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#15272a"><title>空庭ブロック工房 | 潮彩作品集</title>
+  <meta name="theme-color" content="#15272a"><title>E 浮島のブロック建築 | 潮彩作品集</title>
   <link rel="icon" href="icon.png"><link rel="stylesheet" href="player.css"><link rel="stylesheet" href="touch.css"><script defer src="touch.js"></script>
 </head>
 <body>
-<header><span class="imprint">潮彩作品集</span><a href="https://github.com/kaxic/shiosai-sky-garden">GitHub ↗</a></header>
+<header><a class="imprint" id="library-home" href="https://kaxic.github.io/shiosai-game-library/#E"><span aria-hidden="true">← </span>ゲーム一覧</a><span id="home-status" role="status"></span><a href="https://github.com/kaxic/shiosai-sky-garden">GitHub ↗</a></header>
 <main>
   <section id="stage" aria-label="ゲーム画面">
-    <canvas id="game" data-game="Voxel" width="1280" height="720" tabindex="0" aria-label="空庭ブロック工房のゲーム画面"></canvas>
+    <canvas id="game" data-game="Voxel" width="1280" height="720" tabindex="0" aria-label="E 浮島のブロック建築のゲーム画面"></canvas>
     <div id="cover">
-      <div class="titleblock"><p class="genre">ブロック建築</p><h1>空庭ブロック工房</h1><p class="intro">雲海の上に、あなたの工房を。
+      <div class="titleblock"><p class="genre">空庭ブロック工房</p><h1>E 浮島のブロック建築</h1><p class="intro">雲海の上に、あなたの工房を。
 浮島をめぐり、橋や塔を一段ずつ組み上げましょう。</p>
         <button id="launch">ゲームを開始 <span aria-hidden="true">›</span></button>
         <div id="status" role="status" aria-live="polite"></div><progress id="meter" max="1" value="0" hidden></progress>
       </div>
     </div>
   </section>
-  <div class="bar"><span class="wordmark">空庭ブロック工房</span><div class="buttons"><button id="help">操作方法</button><button id="full">全画面</button><a id="demo" href="media/demo.mp4" hidden>プレイ映像 ▷</a></div></div>
+  <div class="bar"><span class="wordmark">E 浮島のブロック建築</span><div class="buttons"><button id="help">操作方法</button><button id="full">全画面</button><a id="demo" href="media/demo.mp4" hidden>プレイ映像 ▷</a></div></div>
   <dialog id="guide"><div class="dialogtop"><h2>操作方法</h2><button class="close">閉じる</button></div><p>キーボードとマウスで遊べます。進行はこのブラウザーに保存されます。</p><div id="controls">左クリック 設置　Shift＋左 回収　中クリック 採色　R 素材を回転。
 右ドラッグまたはQ・Eで旋回、WASDで移動、ホイールで拡縮。
 
@@ -36,7 +36,7 @@ const meter=document.getElementById('meter');
 let instance=null;
 const build='Build/';
 const config={
-  dataUrl:build+'42557ea3d5856f74a9832c4134b718c7.data.unityweb',frameworkUrl:build+'7c79eaa40e1717d5fdf44440ec033d97.framework.js.unityweb',codeUrl:build+'16358f6a077a3a2b963b831a7c24f024.wasm.unityweb',
+  dataUrl:build+'ab5830ca311c664330f4e73122b6a23d.data.unityweb',frameworkUrl:build+'0b5a49350a0a3eef0b5d77c63a6313f3.framework.js.unityweb',codeUrl:build+'ce581571f0bd4a5663b226b8c986aee3.wasm.unityweb',
   streamingAssetsUrl:'StreamingAssets',companyName:'Shiosai Works',productName:'Skyblock Atelier',productVersion:'1.0',
   devicePixelRatio:Math.min(1.5,window.devicePixelRatio||1),
   showBanner:function(message,type){ if(type==='error'){statusLine.textContent='読み込みに失敗しました。ページを再読み込みしてください。';console.error(message);} }
@@ -44,12 +44,19 @@ const config={
 async function startGame(){
   launchButton.disabled=true; statusLine.textContent='ゲームを読み込んでいます…';meter.hidden=false;
   try{
-    if(typeof createUnityInstance!=='function')await new Promise((resolve,reject)=>{const s=document.createElement('script'); s.src=build+'98ac7c1424a2e334d46a1e4e73e4c53d.loader.js';s.onload=resolve;s.onerror=reject;document.head.appendChild(s);});
+    if(typeof createUnityInstance!=='function')await new Promise((resolve,reject)=>{const s=document.createElement('script'); s.src=build+'5515a4f3c3ea5bcbed553f244bc01e8b.loader.js';s.onload=resolve;s.onerror=reject;document.head.appendChild(s);});
     instance=await createUnityInstance(canvas,config,value=>{meter.value=value;statusLine.textContent='読み込み中　'+Math.round(100*value)+'%';});
     cover.hidden=true;canvas.focus();document.body.classList.add('playing');
   }catch(e){statusLine.textContent='ゲームを開始できませんでした。WebGL 2に対応したブラウザーで再試行してください。';meter.hidden=true;launchButton.disabled=false;console.error(e);}
 }
 launchButton.addEventListener('click',startGame);
+document.getElementById('library-home').addEventListener('click',event=>{
+  if(!instance||event.button!==0||event.metaKey||event.ctrlKey||event.altKey||event.shiftKey)return;
+  event.preventDefault();
+  document.getElementById('home-status').textContent='保存してゲーム一覧へ戻ります…';
+  instance.SendMessage('ShiosaiLibraryNavigation','GoHome');
+});
+window.shiosaiHomeFailed=()=>{document.getElementById('home-status').textContent='保存に失敗しました。ゲーム一覧をもう一度押してください。';};
 document.getElementById('full').addEventListener('click',()=>{if(instance){instance.SetFullscreen(1);canvas.focus();}else document.getElementById('stage').requestFullscreen?.();});
 document.getElementById('help').addEventListener('click',()=>document.getElementById('guide').showModal());
 document.querySelectorAll('dialog .close').forEach(b=>b.onclick=()=>b.closest('dialog').close());
